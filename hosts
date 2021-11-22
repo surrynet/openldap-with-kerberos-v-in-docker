@@ -1,0 +1,8 @@
+[ldap]
+ldap1
+ldap2
+[kdc]
+kdc1
+kdc2
+[client]
+client

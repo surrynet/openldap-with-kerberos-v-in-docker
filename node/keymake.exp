@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+
+set username [lindex $argv 0]
+
+set timeout 2
+spawn ssh-keygen -t rsa
+expect {
+    "Enter file in which to save the key (/$username/.ssh/id_rsa): "
+}
+send "\r"
+expect {
+    "Enter passphrase (empty for no passphrase): "
+}
+send "\r"
+expect {
+    "Enter same passphrase again: "
+}
+send "\r\n"
+
+expect eof

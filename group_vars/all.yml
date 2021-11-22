@@ -1,0 +1,3 @@
+slapd_password: password
+kdc_password: password
+client_password: password

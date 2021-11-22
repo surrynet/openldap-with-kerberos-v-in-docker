@@ -1,0 +1,93 @@
+x-node-common: &node-common
+    build:
+        context: node
+        dockerfile: Dockerfile
+    privileged: true
+    domainname: example.com
+    working_dir: /workspace
+    command: "init"
+
+version: "3.8"
+services:
+    ldap1:
+        <<: *node-common
+        container_name: ldap1
+        hostname: ldap1
+        volumes:
+            - type: bind
+              source: .
+              target: /workspace
+            - type: bind
+              source: /sys/fs/cgroup
+              target: /sys/fs/cgroup
+        networks:
+            - nhp_net
+    ldap2:
+        <<: *node-common
+        container_name: ldap2
+        hostname: ldap2
+        volumes:
+            - type: bind
+              source: .
+              target: /workspace
+            - type: bind
+              source: /sys/fs/cgroup
+              target: /sys/fs/cgroup
+        networks:
+            - nhp_net
+    kdc1:
+        <<: *node-common
+        container_name: kdc1
+        hostname: kdc1
+        volumes:
+            - type: bind
+              source: .
+              target: /workspace
+            - type: bind
+              source: /sys/fs/cgroup
+              target: /sys/fs/cgroup
+        networks:
+            - nhp_net
+    kdc2:
+        <<: *node-common
+        container_name: kdc2
+        hostname: kdc2
+        volumes:
+            - type: bind
+              source: .
+              target: /workspace
+            - type: bind
+              source: /sys/fs/cgroup
+              target: /sys/fs/cgroup
+        networks:
+            - nhp_net
+    client:
+        <<: *node-common
+        container_name: client
+        hostname: client
+        volumes:
+            - type: bind
+              source: .
+              target: /workspace
+            - type: bind
+              source: /sys/fs/cgroup
+              target: /sys/fs/cgroup
+        networks:
+            - nhp_net
+#    ldapadmin:
+#        image: osixia/phpldapadmin:0.9.0
+#        container_name: ldapadmin
+#        hostname: ldapadmin
+#        domainname: example.com
+#        environment:
+#            PHPLDAPADMIN_LDAP_HOSTS: ldap1
+#            PHPLDAPADMIN_HTTPS: "false"
+#        ports:
+#            - 80:80
+#        networks:
+#            - nhp_net
+
+networks:
+    nhp_net:
+        name: example.com
+

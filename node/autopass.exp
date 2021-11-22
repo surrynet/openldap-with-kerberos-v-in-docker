@@ -1,0 +1,16 @@
+#!/usr/bin/expect
+
+set username [lindex $argv 0]
+set password [lindex $argv 1]
+
+spawn passwd $username
+expect {
+    "New password: "
+}
+send "$password\r"
+expect {
+    "Retype new password: "
+}
+send "$password\r"
+
+expect eof
